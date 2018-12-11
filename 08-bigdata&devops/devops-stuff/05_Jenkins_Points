@@ -1,0 +1,66 @@
+******Important Plugins used in Jenkins***********************************************************************************************
+Build PipeLine       # To configure the build pipeline by creating dependency
+SSH plugin           # SSH plugin used in Master slave configuration.
+Safe Restart         # Will wait for the running builds to complete before restarting Jenkins.
+Parameter Plugin     # Used to configure local and global parameters.
+github               # will facilitate webhooks to trigger the jenkin jobs when ever there is commit in the github.
+git-                 # Intigrate Jenkins with git SCM.
+Matrix Authorization # Matrix Based authorization globally and project Level
+Ldap Plugin          # Intigrate LDAP with Jenkins
+
+************************************************************************************************************************************
+Jenkins is developed on java and can  be downloaded as war file.
+Jenkins has servelet container Jetty/winstone and run own it's own with out the need of other servelet container like tomcat.
+How ever jenkins war file can be deployed to tomcat and run along with all the applications.
+/var/lib/jenkins              --> Jenkins Home Directory
+/var/lib/jenkins              --> Configuration files.
+/var/lib/jenkins/config.xml   --> Jenkins Home Directory, Work Space Directory ,Job Build Directory and password recovery property.
+/var/lib/jenkins/users        --> Will have all the jenkin users created.
+/var/log/jenkins/jenkins.log  --> View the log of jenkins
+/etc/default/jenkins;         --> Jenkins Home Dir(default-/var/lib/jenkins), JENKINS_PORT (Default-8080) can be modified from this file.
+************************************************************************************************************************************
+1. what is custom work space- While desigining the job we can change the default work space dir to custome workspace.
+    general tab-->advanced--> Use Custom workspace
+2. What  jenkins home dir have?
+    workspace # Each jenkin job creates it's own directory with job name where war/ear will be created.
+    users     # Under users dir, each user has one dirctory.
+    plugins   # will have all the plugin 
+https://wiki.jenkins.io/display/JENKINS/Administering+Jenkins
+3. what config.xml file will have?
+    Details like WorkSpace Directory, Job Build Directory for every job  and password recovery property.
+4. How to execute jenkins from command line.
+    java -jar jenkins-cli.jar -s http://localhost:8080/ create-job NAME # This will create new job
+    java -jar jenkins-cli.jar -s http://localhost:8080/ shutdown        # This will shutdown jenkins server
+5. Jenkins Distributed build / Master slave Architecture.
+    http://scmquest.com/jenkins-master-slave-setup-and-configuration-with-screenshots/
+
+4 Jenkins Password Recovery
+1.Method
+Best Practice by generating jbcrypt password: http://bcrypthashgenerator.apphb.com/
+edit --> /var/lib/jenkins/users/admin/config.xml
+go to the below tag and remove the jbcrypt password and generate new jbcrypt and replace 
+<passwordHash>#jbcrypt:$2a$10$f/2gW3vK6G4.7eWJgvXpm.MKcuSpbYKH3F121QsvJFJUv9Ap9KdZe</passwordHash>
+then restart jenkins server sudo service jenkins restart
+2.Method 
+edit /var/lib/jenkins/config.xml
+<useSecurity>true</useSecurity>  --> change from true to false and restart jenkins server.
+login the jenkins ui by giving username as admin and leave password blank.
+set the password for admin and change the <useSecurity>false</useSecurity>  --> change from false to true and restart jenkins server.
+
+
+-----------------Auto SSH by generating RSA Key--------------
+ssh-keygen -t rsa -- executing this command it will generate both public (id_rsa.pub) and private key (id_rsa) in the selected folder. This keys has to be generated from the local machine.
+copy the public key which is generated in local machine to remote machine  authorised keys file	-->	         /home/ec2-user/.ssh/authorized_keys
+now from local machine we can connect remote by this command
+ssh ec2-user@ip-address # ec2-user is the remote machine user id.
+********************************Jenkins Interview Questions******************************
+You can use any one of the following commands to start Jenkins manually:
+http://localhost:8080/exit − shutdown jenkins
+http://localhost:8080/restart − restart jenkins
+http://localhost:8080/reload − to reload the configuration
+http://localhost:8080/safeRestart- Allows all running builds to complete.
+
+To start Jenkins manually open Console/Command line, then go to your Jenkins installation directory. Over there you can use the below commands:
+To start Jenkins: jenkins.exe start
+To stop Jenkins: jenkins.exe stop
+To restart Jenkins: jenkins.exe restart

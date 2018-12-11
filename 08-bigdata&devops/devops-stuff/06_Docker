@@ -1,0 +1,158 @@
+# Automation vs Orchestration
+# Automation: is something where the repetitive task will only be handled.
+  Ex: Launching a web server, configuring a web server, stopping a service.
+# Orchestration: is something where the process will get automated.
+  Ex: A provisioning process may be comprised of multiple tasks and involve multiple systems. 
+      Automating the process of  provisioning the entire application like web, app and database in a traditional three-tier architecture.
+ 
+# Docker is a containerization Platform where in each container can be called as a virtual machine. 
+# Each application in Docker is isolated to each other and each app (webserver, appserver, redis and database) runs on it's dedicated container.
+# The main advantage of Docker is host machine Kernel is shared by all containers and binaries and libraries is shared across all containers in common.
+# This will reduce the over head of booting the containers and which makes lite weight.
+# The downside of Docker is since the binaries and libraries are shared across many containers in common if one container gets infected the impact will be on other containers hence
+  this is a security glitch and this is the biggest advantage  for virtual machines running on hypervisiors.
+
+# Virtualization is of two types: Hardware Level (Individual kernels for Host and guest) and OS level (Kernel is shared).
+# Commands can be run from an interactive shell called Docker CLI, or through a configuration file called a "Dockerfile". 
+# Alpine Linux is a Linux distribution based on musl and BusyBox, primarily designed for "power users who appreciate security,simplicity and resource efficiency".
+# Docker engine/Daemon/Server natively run on Linux kernel hence Docker Machine is used for windows and Mac.
+# Docker Machine/Tool box # is a native windows/mac application and manages Virtual box internally to create Linux VM  to runDocker Daemon on Windows or Mac.
+# Docker kitematic       # is a GUI tool for docker.
+# Images                 # Images are templates (read only) which is used to create containers. Images are created by us or other users using docker build and docker commit commands. Images are composed of layers from other images 							   and stored in docker registry.
+# Containers             # Containers are the run time instances of images which are writable.
+						   (Image is read only,Container read/write). All changes made into the running container will be written to writable layer.When the container is stopped the writable layer is also deleted and underlying image remains same.
+# Docker Hub             # Is a public docker repository where images are stored and uploaded under registries.
+
+#########################  Docker Command #########################################################################
+
+docker info              # Will display the Docker root dir (/var/lib/docker) in host machine and other info like images and no of containers running,paused,stopped. Image id,Logpath,ipaddress etc..
+docker pull centos       # This will pull the image from docker hub/repository to local repository.If we no tag specified it will pull the latest image by default.
+docker pull image:tag    # This will pull the image with specified tag (version).
+docker images            # This will show the available images in the local repository.
+docker run  centos       # run command will check for image in local repo if not available it will pull from repo and create the container. Normally if you run a container without options it will start and stop immediately,Once this 	                        command is issued container is created and exited. Hence we have to use -it and -d option.
+docker run -it centos /bin/bash 
+                         # This will pull & create the container in interactive mode by opening bash shell with root user.
+                         # exit--> will stop the container and exit by destroying the data with in the container. (cntrl+p) followed by (cntrl+q) will exit the container with 	out stopping and runs in background with detachable mode.
+                -i: Interactive mode with container
+                -t: Assign terminal inside container (pseudo tty for stdin and stdout)
+                -d: To run container in detached mode i.e in background.
+              --rm: This will automatically remove the container once it is stopped.
+            --name: Give a name to container.
+######################### Port Mapping #########################################################################
+docker run tomcat -d -p 9999:8080 # Port mapping -p hostport:container port.
+docker run containerid -p <host_port1>:<container_port1> -p <host_port2>:<container_port2>.
+
+docker attach contain_id # This will attach the detached/running container i.e again login into container shell with root user.
+docker logs container-id # This will show the logs of running container.
+docker top  ContainerID  # We can see the top processes within a container.
+######################### Volume Mapping & Sharing Volumes between two Containers ####################################
+sudo docker run -it -v hostdir:containerdir bash
+sudo docker run -it -v /home/akiran1234_tech/dockervolumemount:/var/www/html -p 8888:80 20c44cd7596f bash
+
+# Sharing Volumes across two containers
+sudo docker run -it -v /mydir/data --name=container1 20c44cd7596f bash   # -v /mydir/data is created and this dir will be shared.
+sudo docker run -it --name=container2 --volumes-from container1 20c44cd7596f bash # --volumes-from container1 will map container1
+# Note: Even the container1 is stopped/killed still the volume is accessable this is called data containers.
+######################### Linking containers ####################################
+docker run -d --name=container1 imageid 
+docker run -it --link container1:cont1 imageid bash  
+# --link is used to link the other container with alias name. Here cont1 is alias which points to container1.
+
+######################## List the containers #############################################
+docker ps                # Will list out only all the running containers.
+docker ps -a             # -a will list all the containers (running and stopped)
+docker ps -l             # -l will list the last container.
+docker history image:tag # Will display the list of layers of the image with snapshot of each layer.
+
+######################## Copy files to and from container #################################
+docker cp file1.txt mycontainerid:/dir      # This will copy the file from local FS to container dir. Container dir should exist.
+docker cp mycontainer:/file1.txt /localdir  # This will copy the file from Container FS to Localdir.
+
+######################### Kill/Stop Containers ################################################
+docker kill containerid  # This will send the kill signal to terminate running docker process instantly. (Instant Termination)
+docker stop ContainerID  # Stop will wait for the grace time and terminate running docker process. (Gracefull shutdown)
+docker start containerId # This will start the container again.
+# when a container is stopped/killed the data/new applications inside the container remains persistant there is no data loss.
+# we can start the stopped container and make use of it.
+
+######################### Removing Images and Containers #########################
+docker rmi image         # This will remove the image from local repo. It cannot remove running/stopped container of that image.
+docker rmi -f image      # This will remove the image and corresponding containers forcefully even if the container is running/stopped state for that particular image.
+docker rm container_id   # This will remove the container which is not running.
+docker rm -f contain_id  # This will remove the container forcibly which is running/stopped.
+
+######################### Docker File for creaing Docker Images ######################
+# Docker File is used to create docker image.
+# Two ways to build docker image --> 1. Interactive Mode using (docker commit)  2. Write Docker file (docker build)
+# docker commit cont_id image:version
+			 # Pull an image and launch container and install few applications then exit from container and commit.
+                         # exit from the running container after applying changes and commit.
+                         # Commit the changes in running container all the changes(kernel update,App Installation, read/write files etc..) will become persistent and from which image is created.
+
+# Docker file to create Docker image. A docker file is a text doc that contains all the instructions to assemble image.
+# Each instruction will create new image layer to the existing layer.
+# Naming convention for Docker file, the file should be named with (Dockerfile). Put all the instructions in Dockerfile.
+
+docker build  -t ImageName:TagName . --no-cache=true
+                         # . refers to current called Docker build context path where (Dockerfile) and other supporting files should be placed. when build starts docker client will pack all the files in tarball and give it to docker engine.
+                         If no dir specified by default it will search for root dir of docker.
+                         -t: specifies tag name.
+			 --no-cache= Refers to not cache the RUN instructions
+			 # By default all the RUN instructions are cached.
+
+docker tag imageid akiran1234/newimageid:tag   # The above command will rename the existing image and creates new image leaving the actual image as it is.
+
+############################## Push docker image into repository ###########################################
+docker login --name=akiran1234                 # To login into docker hub account
+docker push akiran1234/image:tag               # This will push the image into docker hub akiran1234 account.	
+############################## Docker File important Points ################################################
+FROM ubuntu:16.04                                # Using the base image.              
+MAINTAINER Preparing Java Web APP Env            # To describe the Author and functionality of Docker file.
+RUN  apt-get update -y                           # RUN is used to execute the linux commands.
+RUN  apt-get install apache2 -y 
+RUN  apt-get install wget -y
+RUN  touch file1.txt file2.txt kiran.txt
+COPY localfile.txt /kiran/mydir/                 # Copy the file from Local FS (Build Context Path) to Container FS. Target will be created if it doesn't exist.
+ADD http://foo.com/bar.go /kiran/mydir/          # 1. Download the file from Web and copy to container FS. 2) Copy the tar file from context path to container FS, Once copied it will untar.
+EXPOSE 3000 80 443 22                            # To expose the ports to hostmachine.
+CMD echo "This is the first command"             # CMD argument is the  first command that is executed inside after the container is launched. CMD can be overidden.
+ENTRYPOINT  echo "Hello this is entrypoint"      # This is also the first command after container is launched but ENTRYPOINT cannot be overidden.																				  
+
+# Each RUN command will create a new image layer with image id's hence it is suggested to keep all the RUN commands in one command.
+# RUN apt-get update -y && apt-get install apache2 -y && apt-get install wget -y 
+# For COPY Source file should be in the docker context directory and target dir will be created. If given other src path copy will fail.
+# Either CMD or ENTRYPOINT will be used. 
+# CMD argument command can be overidden and ENTRYPOINT argument command cannot be overidden.
+
+################### Docker Networking #####################################
+docker network ls                           # Will list the available networks in Docker
+docker network inspect bridge               # will show the complete details of network such as CIDR range, no of containers attached and their ip's and gateway ip.
+docker network create  -- bridge bridgenet1 # This command is used to create new bridge network and ip range is given automatically
+docker network ls                           # This will list the new network that is been created above.
+docker network inspect bridgenet1           # This is used to check ip range no of containers connected.
+sudo ifconfig                               # Check on hostmachine it will show docker 0 interface this is how containers using bridge network are getting communicated.
+
+
+1.Bridge Network   # By default docker will have bridge network  (i.e docker 0 on hostmachine) by which all the containers and hostmachine connected and talk to each other.
+                   # ifconfig; get the ipaddress and ping from othe container and check. All the bridge networks can talk to each other.
+		   # Bridge Networks have two interfaces 1.Private Interface (eth0) 2. Loop Back Address(LO)
+		   # By default two bridge network cannot talk to each other it has to specify explicitly.
+
+2.Host Network     # In host network it will have access to hostnetwork interfaces hence this network will have least network security.
+                   # Containers in this network are called Open Containers.
+		   # docker run -it --net host ubuntu:16.04 bash --> --net host will launch the container in hostnetwork.
+								 
+3.None Network      # In None Network containers the container is isolated and it cannot talk to any other container.
+                    # It has only one interface called LO interface (Loop Back Address) and there is no eth0 interface.
+		    # docker run -it --net none ubuntu:16.04 bash --> --net none will launch the container in none network.
+		    # ifconfig and get ip then ping and check.
+		    # This net work model will have highest level of security and it will not have interner and communication with other containers.
+
+4. Overlay Network #
+################################## Docker Compose ########################################
+Docker compose is an .yml file where in it is used to manage all the containers from one configuration file.
+This is used to display the logs, port numbers, start and stop the containers etc.. 
+docker-compose --help # Please refer.
+
+################################## Docker File Commands Explained ########################################3
+https://www.digitalocean.com/community/tutorials/docker-explained-using-dockerfiles-to-automate-building-of-images

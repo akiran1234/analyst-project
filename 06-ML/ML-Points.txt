@@ -1,0 +1,10 @@
+################## Linear Regression #################################
+https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/regression-analysis/
+ R^2 vs Adj R^2 - https://www.statisticshowto.datasciencecentral.com/adjusted-r2/
+ 
+
+
+
+
+################## Logistic Regression #################################
+https://www.datacamp.com/community/tutorials/understanding-logistic-regression-python

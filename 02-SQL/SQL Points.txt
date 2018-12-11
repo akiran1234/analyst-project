@@ -1,0 +1,74 @@
+############ SQL ##############
+Database will be created on one host (Physical/Virtual Machine) and runs on port 1521.
+Database is nothing but SID (sdimprod,udimprod,orcl)
+Database is segerated in to more granular in terms of Schemas (usa,scott,sales,risk)
+
+The key difference is that RDBMS (relational database management system) applications store data in a tabular form, Normalised, tables have relations and support ACID properties.
+DBMS applications store data as files data is not normalised, no relations, no ACID properties.
+https://stackoverflow.com/questions/18419137/what-is-the-difference-between-dbms-and-rdbms
+
+DDL    --> create, alter,rename,drop
+DML   --> Insert, update,delete,merge     # commit is mandatory for DML for persistant data even for insert.
+DQL   -->  select 
+DCL    -->  grant , revoke
+TCL     -->  commit, rollback, truncate (delete + commit)
+
+# Exists example
+select * from dept e where EXISTS (select * from emp d where e.deptno=d.deptno)
+select * from dept e where NOT EXISTS (select * from emp d where e.deptno=d.deptno)
+
+select * from emp where deptno in (10,20,NULL)               # out put records will be 10,20 
+select * from emp where deptno NOT IN (10,20,NULL)     # NOT IN operator with Null will return empty output
+
+delete from emp where deptno in (select deptno from emp group by deptno having count(*) <3)
+
+# ANY, ALL used in conjuction with relational operator.
+select * from emp where sal=any (1600,2000) ; select * from emp where sal>all (1600,2000)
+select * from emp e join (select sal from emp where ename in ('JONES','SCOTT')) s on (e.sal>ALL s.sal)
+
+# Order of execution in SQL query
+distinct, from table1 join table2 on, where, group by, having, select, order by, limit.
+
+SELECT * FROM EMP SAMPLE(10);                                            # 
+# Scalar Functions are nothing but single row functions
+# SQL Injection is nothing but attacking data base by inserting malicious select statements.
+Nth higest salary
+CTE (Common Table Expression)
+
+# Sum of Positive and Negative Numbers from a column from a table.
+select sum(case when x>0 then x else 0 end)sum_pos,sum(case when x<0 then x else 0 end)sum_neg from a;
+
+# Query for non matching records between two tables.
+select e.empno, e.deptno,d.DNAME from emp1 e left join dept1 d on(e.deptno=d.deptno) where d.DNAME is null order by 2
+select * from dept e where NOT EXISTS (select * from emp d where e.deptno=d.deptno)
+
+# Qurey for running totals
+
+# Display 4th highest sal using CTE (common table expression)
+with temp as (select * from emp  order by sal desc) 
+select * from temp where rownum<=4 minus
+select * from temp where rownum<=3
+
+# Delet Nth records
+select empno from emp where rownum<=10   (N)       -- empno comes from the first query
+minus
+select empno from emp where rownum<=9      (N-1)
+
+# Delete duplicate rows from a table with out row id.
+
+################## TRUNC on numbers and dates ##############################
+select trunc(1234.45634,3),trunc(1234.34),trunc(1234.45634,-2) from dual
+						1234.456		                   1234	                  1200
+
+select round(1234.34),round(1234.54),round(1234.45634,3),round(1234.45634,-2) from dual
+                         1234.456	           1234	                   1235	                               1200
+
+select sysdate,                       round(sysdate),round(sysdate,'mm'),round(sysdate,'yyyy') from dual
+5/14/2018 11:42:24 AM	5/14/2018	        5/1/2018	                       1/1/2018
+
+select round(to_date('12-Dec-2018')),round(to_date('12-Dec-2018'),'dd'),round(to_date('12-Dec-2018'),'mm'),round(to_date('12-Jun-2018'),'yyyy') from dual
+select trunc(to_date('12-Dec-2018'),'dd'),trunc(to_date('12-Dec-2018'),'mm'),trunc(to_date('12-Dec-2018'),'yyyy') from dual
+
+
+
+

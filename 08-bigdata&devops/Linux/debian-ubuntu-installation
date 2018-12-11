@@ -1,0 +1,62 @@
+************Kernal Update*******************
+sudo apt-get update -y
+sudo apt-get install vim wget tree zip mlocate  -y
+sudo updatedb
+sudo openssl # Used for encrpt and decrypt of password in a file.
+*********************************************************
+sudo apt-get install openjdk-8-jdk -y 
+sudo apt-get install tomcat7 -y 
+sudo apt-get install tomcat7-docs tomcat7-admin tomcat7-examples -y
+all the services will be started on systems boot automatically (/etc/init.d/tomcat) taken care by apt-get //Not required like RHEL -sudo chkconfig jenkins on 
+sudo systemctl enable tomcat7 -- This will launch the service on bootup. Check this in ubuntu.
+**************Apache Web server Installation*******************************************
+sudo apt-get install apache2
+/var/www/html/index.html  # Static Web page deployment path
+To check the status of a service in ubuntu
+sudo service apache2 status   // Same as in RHEL
+*************Maven Installation********************************************
+sudo apt-get install maven -y
+*********************************************************
+/var/lib/tomcat7/webapps/                # jar/war file deployment, there after it will show in tomcat manager.
+/var/lib/tomcat7/conf/tomcat-users.xml   # Manager Role define path
+
+<tomcat-users>
+<role rolename="admin"/>
+<role rolename="admin-gui"/>
+<role rolename="manager-gui"/>
+<user username="tomcat" password="tomcat" roles="admin,admin-gui,manager-gui"/>
+</tomcat-users>
+
+*******************MySql Installation**************************************
+sudo apt-get install mysql-server  # This will start installing and prompt for root user password;provide password- mysql
+sudo mysql_secure_installation
+sudo systemctl enable mysql        # Enable mysql service at boot up
+mysql -u root -p                   # Provide the password as mysql
+
+*******Database and user creation********
+Login as root db user and execute the below
+create database sonardb;
+create user 'sonar'@'localhost' identified by 'sonar';
+SELECT User, Host, Password FROM mysql.user; # To list all the users in DB.
+GRANT ALL PRIVILEGES ON sonardb.* TO 'sonar'@'localhost' IDENTIFIED BY 'sonar'; FLUSH PRIVILEGES;
+Reference: https://www.linode.com/docs/databases/mysql/install-mysql-on-ubuntu-14-04
+
+************ Python MySQLdb Module******************************
+sudo apt-get install python-mysqldb # Installing mysqldb library.
+db = MySQLdb.connect(host="localhost",user="test",passwd="test",db="testdb") # Creating connect object (db)
+cur=db.cursor()                  # Creating cursor object (cur).
+cur.execute("select * from emp") # cur.execute()  method to exeute sql statement.
+for rows in cur.fetchall():      # cur.fetchall() method to fetch all the records of execute method.
+  print rows
+
+
+*******************Sonar Qube Installation**************************************
+Sonar qube Installation and configuration; Prerequiste --> msql has to be installed.
+cd /usr/local
+sudo wget https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-6.4.zip
+sudo unzip sonarqube-6.4.zip
+
+************Networkin commands***********
+netstat -tulnp
+# Networking basics
+https://support.microsoft.com/en-in/help/164015/understanding-tcp-ip-addressing-and-subnetting-basics
