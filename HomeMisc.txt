@@ -1,0 +1,69 @@
+what is kde in distplot of seaborn?
+
+Normal dist, Std Normal Dist,  CLT, Significance Level, Critical Region/Rejection Region, Hypothesis Testing, Type-1 Error & Type-2 Error.
+Z-test, T-test, F-test, ANOVA, Chi-Square test. (Parameter Tests).
+
+union A|B
+intersection A&B
+
+Python for Data Science and Machine Learning Bootcamp
+
+
+
+from patsy import dmatrices     # package for describing statistical model and building design matrices
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+y_vif,X_vif = dmatrices('Price ~ AGST + HarvestRain + WinterRain + Age + FrancePop' , wine, return_type='dataframe')
+
+wine_vif = pd.DataFrame()
+wine_vif["VIF Value"] = [variance_inflation_factor(X_vif.values, i) for i in range(X_vif.shape[1])]
+wine_vif["Features"] = X_vif.columns
+wine_vif
+
+check stratified sample
+check multicollinearity on continous & categorical variables.
+multicollinearity check for relation (categorical op columns ~only continous variables columns to find multicollinearity)
+
+https://notebooks.azure.com/PranaliC/projects/PythonTraining/html/MachineLearning/LogRegQuality.ipynb
+
+https://notebooks.azure.com/PranaliC/projects/PythonTraining/html/MachineLearning/LogRegQualityStats.ipynb
+
+https://notebooks.azure.com/PranaliC/projects/PythonTraining/html/MachineLearning/LRWine.ipynb
+
+https://notebooks.azure.com/PranaliC/projects/PythonTraining/html/MachineLearning/LRWineStats.ipynb
+
+T-Test Explanation
+https://www.investopedia.com/terms/t/t-test.asp
+
+Hypothesis steps well explained- https://www.youtube.com/watch?v=PUm3oq2lQWs
+https://www.youtube.com/channel/UC5S5rgpUu5htnyfBV7R8NUQ/videos
+
+pruning - the sub branch which doesn't give much information in our decesion tree.
+https://www.youtube.com/watch?v=qDcl-FRnwSU- decision trees
+Random forest - for classificatio (gini index, entropy) for regression (RSS)
+
+----------------------------
+proactive in sharing the knowledge among the team members and conducting knowledge sharing sessions in the areas of expertise.
+Running weekly and monthly reporting and analysis (standard and ad hoc data analysis)
+
+Master’s with 3-7 years of relevant experience
+Experience in analyzing medium complex problems and translate it into analytical approach
+Experience in Statistical Learning: - Predictive & Prescriptive Analytics, Web Analytics, Parametric and Non-parametric models, Regression, Time Series, Dynamic/Causal Model, Statistical Learning, Guided Decisions, Topic Modeling  
+Experience in Machine Learning, supervised and unsupervised: - Forecasting, Classification, Data/Text Mining, NLP, Decision Trees, Adaptive Decision Algorithms, Random Forest, Search Algorithms, Neural Networks, Deep Learning Algorithms
+Mentoring junior statistical analysts on approach and results.
+Experience with big data analytics and advanced data mining techniques to analyze data                                                      
+Experience with identifying trends, patterns, and outliers in data                                                                                                                                                        
+Experience with statistical programming languages, analytical packages/libraries (R, Python)
+Experience with statistical  tools  (R studio, Revolution R, Python notebooks)                                                                                       
+Experience with SQL and relational databases, data warehouse platforms (Teradata), NoSQL databases 
+Experience with big data platforms - Hadoop(Hive, Pig, Map Reduce, HQL)/Spark/H2O
+Our Ideal Candidate
+You are a technical, strong and high performing individual with excellent communication skills, proven analytical skill set and strong customer focus. You stay updated with latest research and technology ideas, and have a passion to utilize innovative ways to solve problems. You are a good story-teller and able to simply articulate the intricacies of your models as well as explain your results clearly to stakeholders.
+1.35797439053913E-09
+-------------------------------------------------------------------------------------------------------------
+business analytics
+web analytics- conversion rate, 
+campaien  analytics- test /controller
+space optimization- 
+
+
