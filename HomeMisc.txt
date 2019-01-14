@@ -20,9 +20,14 @@ wine_vif["VIF Value"] = [variance_inflation_factor(X_vif.values, i) for i in ran
 wine_vif["Features"] = X_vif.columns
 wine_vif
 
+y_vif,X_vif = dmatrices('Price ~ AGST + HarvestRain + FrancePop' , wine, return_type='dataframe')
+'AGST', 'HarvestRain','FrancePop'
+
 check stratified sample
 check multicollinearity on continous & categorical variables.
 multicollinearity check for relation (categorical op columns ~only continous variables columns to find multicollinearity)
+# Logistic Regression
+Lower the AIC better the model, it is like adj R^2 in L.Reg. If we keep adding the variables but Aic is not decreasing it means it is an un explained variable.
 
 https://notebooks.azure.com/PranaliC/projects/PythonTraining/html/MachineLearning/LogRegQuality.ipynb
 
@@ -65,5 +70,47 @@ business analytics
 web analytics- conversion rate, 
 campaien  analytics- test /controller
 space optimization- 
+------------------------------------------------------------------------------------------------------------
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+wine=pd.read_csv("https://storage.googleapis.com/dimensionless/Analytics/wine.csv")
+wine.head()
+wine.isnull().sum()
+import statsmodels.api as sm
+model1=sm.OLS(wine[['Price']],sm.add_constant(wine[['Year','WinterRain', 'AGST', 'HarvestRain', 'Age','FrancePop']])).fit()
+model1.summary()
+model2=sm.OLS(wine[['Price']],sm.add_constant(wine[['Year','WinterRain', 'AGST', 'HarvestRain','FrancePop']])).fit()
+model2.summary()
+model3=sm.OLS(wine[['Price']],sm.add_constant(wine[['WinterRain', 'AGST', 'HarvestRain','FrancePop']])).fit()
+model3.summary()
+model3.rsquared
+from patsy import dmatrices     # package for describing statistical model and building design matrices
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+y_vif,X_vif = dmatrices('Price ~ WinterRain+ AGST + HarvestRain + FrancePop', wine, return_type='dataframe')
+wine_vif = pd.DataFrame()
+wine_vif["VIF Value"] = [variance_inflation_factor(X_vif.values, i) for i in range(X_vif.shape[1])]
+wine_vif["Features"] = X_vif.columns
+wine_vif
+
+# Variables have been finalised hence building model using sklearn
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score,mean_squared_error
+from sklearn.cross_validation import train_test_split
+y=wine[['Price']]
+X=wine[['AGST', 'HarvestRain','WinterRain','Age']]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+X_train.shape, X_test.shape, y_train.shape, y_test.shape
+lr1=LinearRegression()
+res1=lr1.fit(X_train,y_train)
+res1.coef_
+res1.intercept_
+r2_score(y_test,y_pred)
+y_pred=res1.predict(X_test)
+plt.scatter(y_pred,y_test)
 
 
