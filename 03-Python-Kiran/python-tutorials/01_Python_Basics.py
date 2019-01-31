@@ -14,6 +14,12 @@
 # https://data-flair.training/blogs/python-tutorial/ -- Refer for python
 # Python is a pure OOPS Language- modules,variables,functions,classes. type(object) will return the object class.
 # https://www.jetbrains.com/help/pycharm/symbols.html  -- pycharm symbol reference
+# By default python is executed in  Cpython i.e it will compile the code to C based byte code and this byte code is converted into binary code which machine can be understood.
+# https://www.toptal.com/python/why-are-there-so-many-pythons
+import platform; 
+print(platform.python_implementation())  # To check if it is Cpython or Jython or other compilers.
+# Python private heap space - All Python objects and data structures are located in a private heap. The programmer does not have access to this private heap. The python interpreter takes care of this instead.
+# Python also has an inbuilt garbage collector, which recycles all the unused memory and so that it can be made available to the heap space.
 
 count = 10
 print("Printing the value of count", count)

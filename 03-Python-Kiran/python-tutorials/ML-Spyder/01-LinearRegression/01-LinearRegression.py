@@ -55,6 +55,7 @@ plt.xlabel('Years of Experience')
 plt.ylabel('Salary')
 plt.show()
 
+sns.lmplot()
 
 
 

@@ -14,8 +14,8 @@ plt.plot()                                                   # is a plotting fun
 plt.plot(days,max_t,linestyle='--',linewidth=2,color='g',alpha=0.5)   # alpha is the thickness of the color ranges from (0.1 to 1.0)
 plt.plot(days,max_t,'g--')                      # This is a shortcut for linestyle and line color
 
-                                                                  # To see the difference draw the plot by taking data set with small points and many points.
-x=[1,2,3,4,5,6,7]                                   # days of the week
+                                                                 # To see the difference draw the plot by taking data set with small points and many points.
+x=[1,2,3,4,5,6,7]                                 # days of the week
 max_t=[50,51,52,48,47,49,46]         # reading for each day.
 iris=sns.load_dataset("iris")
 plt.plot(iris['sepal_length'], iris['sepal_width'])      # drawing with more datapoints to see the difference. by default it will draw line if we don't supply any markers.

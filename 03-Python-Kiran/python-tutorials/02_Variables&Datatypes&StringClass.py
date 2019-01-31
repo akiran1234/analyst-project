@@ -77,12 +77,11 @@ type2=12345457899994333999348937777777777777777777777777777777777799999999999999
 type3=20.56
 type4=345j
 type5="Python"
-print("printing the class/type of variable type1",type(type2))
-print("printing the class/type of variable type1",type(type3))
-print("printing the class/type of variable type1",type(type4))
 print("printing the class/type of variable type1",type(type1))
-print("printing the class/type of variable type1",type(type5))
-
+print("printing the class/type of variable type2",type(type2))
+print("printing the class/type of variable type3",type(type3))
+print("printing the class/type of variable type4",type(type4))
+print("printing the class/type of variable type5",type(type5))
 print("**********************")
 #####################################################################################################################
 # 2. String Data types (Immutable)

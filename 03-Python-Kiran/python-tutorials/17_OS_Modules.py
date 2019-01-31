@@ -16,6 +16,7 @@ print("**********************")
 
 import os
 hostname = "8.8.8.8"                     # google dns ip address
+"ping " + hostname
 response = os.system("ping " + hostname)
 
 print("Printing the response=",response) # response=0 for reachable; response=1 for not reachable.

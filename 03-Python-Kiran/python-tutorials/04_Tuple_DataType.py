@@ -89,3 +89,11 @@ for a,b in l:
      lempty.append(b)
 
 print("lempty",lempty)
+
+#################################################################################################################
+# tuple comprehension is nothing but generators.
+l=range(5)
+g=(i*i for i in l)
+print(type(g))
+for i in g:
+    print(i)

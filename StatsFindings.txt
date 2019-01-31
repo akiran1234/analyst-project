@@ -1,0 +1,62 @@
+##### coefficient_of_determination ############ (R^2)
+https://stattrek.com/statistics/dictionary.aspx?definition=coefficient_of_determination
+
+############# Hypothesis Testing Using T-Distribution  ############
+https://mathcracker.com/t-test-for-one-mean.php#results    # Very Good
+
+Degrees of Freedom
+The association between variables can be found in two ways.
+	1. continious variables -- pearson correlation
+	2. categorical variables --chi square test (if p(test)=0 then two categorical variables are dependent on each other if p(test)=1 then categorical variables are in dependent of each other).
+	
+### T-Distribution ##########
+https://businessjargons.com/t-distribution.html
+
+
+### Chi square caliculator ########
+https://www.mathcelebrity.com/chicritical.php?a=0.99&d=14&pl=Calculate
+
+akiran.tech123@gmail.com
+501@Ramuk
+Kalyan Nagar, Bangalore- 560043
+Member Technical Staff 
+----------------------------------------------------------------
+what are the significant variables used in your model and how this variable is significant with the outcome variable.
+by seeing the model summary how do you identify a model has been over fitted/under fitted.
+what is the maximum likely hood estimator in logistic regression.
+what is multinomial regression and how the probability is compared between multiple classes.
+Decesion Tree- diff b/w gini index or entropy.
+What is bagging and boosting.
+what are the time series components?
+Stationarity ?
+do you know time series forecasting.
+clustering?
+homoscadacity vs hetroscadacity.
+what is p-value
+---------------------- dxc tech ------------------------------------------
+What are the assumptions of Linear regression.
+what is link function in logistic regression.
+what is pca and how does it works
+what are the parameters you give for random forest.
+
+---------------------Model building Steps------------------------------------
+1. Cleanse the data by Imputation (Check for all the null the rows and all the null columns, drop those rows or columns, use fillna() & dropna())
+2. Handle the outliers 
+def outlierDetect(df,col):
+    q1=df[col].quantile(0.25)
+    q3=df[col].quantile(0.75)
+    IQR=q3-q1
+    lbound= q1-1.5*IQR
+    ubound= q3+1.5*IQR
+    return lbound,ubound
+x=outlierDetect(nba,'PTS')         # Pass the data frame name and column name will return set datatype.
+
+2. Do one hot encoding (convert categorical variable columns to numeric columns; pd.get_dummies() this will avoid dummy variable trap as well)
+3. Feature Scaling (Standardization or Normolization); Usually Standardization will be done dummy variables no standardization required.
+4. from sklearn.preprocess import StandardScaler;  # https://medium.com/@rrfd/standardize-or-normalize-examples-in-python-e3f174b65dfc
+    sc_X=StandardScaler()
+	X_train=sc_X.fittransform(X_train)
+	X_test= sc_X.transform(X_test)
+5. Import Note: if the output variable is categorical no need to do feature scaling; If the output variable in continious the feature scaling is must for both (X & y)
+
+

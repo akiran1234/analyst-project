@@ -10,6 +10,9 @@ Do the sub total sums of the column using (ALT+=)--> Go to Search Icon--> Go to 
 Diff b/w count(), counta(), countif() and countifs() 
 count() will count only numeric values counta() will count all numeric,alphanumeric, etc..
 Nth highest and Nth lowest values--> large(), small()
+VLOOKUP() - In vlookup, the lookup value should be the left most column of the lookup table and it is must else error values. (like data base joins)
+HLOOKUP() - In hlookup, the column names will be as rowid's and always lookup value should be as 1st row and corresponding row will be pulled.
+
 
 Charts
 https://www.superdatascience.com/courses/data-visualization-w-excel-charts-graphs/

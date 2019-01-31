@@ -21,7 +21,7 @@ import calendar
 print(calendar.month(2018,8))        # Displaying calander
 ########################################################################################
 import datetime                      # Caliculate the no of days between two dates.
-print(datetime.date(2018,1,31)-datetime.date(2018,1,1))
+print(datetime.date(2018,1,31)-datetime.date(2018,12,31))
 ########################################################################################
 def personal_details():
     name, age = "Simon", 19
